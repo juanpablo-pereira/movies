@@ -2,25 +2,41 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' show Client;
 
-import '../utils/constants.dart';
-import '../model/movies_model.dart';
+import '../model/movie.dart';
+import 'movie_strings.dart';
 
 class MoviesApiProvider {
   Client client = Client();
 
-  Future<MoviesModel> fetchMovieList() async {
-    final response = await client.get(
-      "${Constants.apiFetchUrl + Constants.apiKey}",
-    );
+  Future<Movie> fetchAllMovies() async {
+    final query = "${MovieStrings.apiFetchPopular}"
+        "${MovieStrings.apiKey}";
+    return _getMovies(query);
+  }
 
+  Future<Movie> fetchMovieSearch(String keywords) async {
+    final query = "${MovieStrings.apiFetchSearch}"
+        "${MovieStrings.apiKey}"
+        "${MovieStrings.apiSearchParam}"
+        "$keywords";
+    return _getMovies(query);
+  }
+
+  Future<Movie> _getMovies(String query) async {
+    final response = await client.get(
+      Uri.parse(
+        "$query",
+      ),
+    );
     if (response.statusCode == 200) {
-      return MoviesModel.fromJson(
+      return Movie.fromJson(
         json.decode(
           response.body,
         ),
       );
-    } else {
-      throw Exception('Failed to load movie');
     }
+    throw Exception(
+      'Failed to load movies',
+    );
   }
 }

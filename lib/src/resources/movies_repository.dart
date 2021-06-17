@@ -1,7 +1,8 @@
-import 'movies_api_provider.dart';
-import '../model/movies_model.dart';
+import '../model/movie.dart';
+import 'i_movies_repository.dart';
 
-class MoviesRepository {
-  final moviesApiProvider = MoviesApiProvider();
-  Future<MoviesModel> fetchAllMovies() => moviesApiProvider.fetchMovieList();
+class MoviesRepository extends IMoviesRepository {
+  Future<Movie> fetchAllMovies() => moviesApiProvider.fetchAllMovies();
+  Future<Movie> fetchMovieSearch(String keywords) =>
+      moviesApiProvider.fetchMovieSearch(keywords);
 }

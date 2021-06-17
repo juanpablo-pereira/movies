@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import '../model/movies_model.dart';
+import '../model/movie.dart';
 import 'bloc.dart';
 
 abstract class IMoviesBloc extends Bloc {
-  Stream<MoviesModel> get stream;
+  Stream<Movie> get stream;
 
-  void fetchMovies();
+  void fetchTrendingMovies();
+  void fetchMoviesBySearch(String movieKeywords);
 }
