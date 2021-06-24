@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 
-import '../utils/constants.dart';
-import '../model/movies_result_model.dart';
+import '../utils/movie_dimensions.dart';
+import '../model/movie_result.dart';
+import '../resources/movie_strings.dart';
 
 class MoviesGridBuilder extends StatelessWidget {
   const MoviesGridBuilder(
     this.moviesResults, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final List<MoviesResultModel> moviesResults;
+  final List<MovieResult> moviesResults;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: Constants.gridBuilderCrossAxisCount,
-        mainAxisExtent: Constants.gridBuilderMainAxisExtent,
+        crossAxisCount: MovieDimensions.gridBuilderCrossAxisCount,
+        mainAxisExtent: MovieDimensions.gridBuilderMainAxisExtent,
       ),
       itemCount: moviesResults.length,
       itemBuilder: (context, index) {
         return Image.network(
-          '${Constants.gridBuilderImageUrlStart + moviesResults[index].posterPath}',
+          '${MovieStrings.gridBuilderImageUrlStart + moviesResults[index].posterPath}',
           fit: BoxFit.cover,
         );
       },

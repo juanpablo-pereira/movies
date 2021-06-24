@@ -1,29 +1,49 @@
 import 'dart:async';
 
-import '../model/movies_model.dart';
+import '../model/movie.dart';
 import '../resources/movies_repository.dart';
 import 'i_movies_bloc.dart';
 
 class MoviesBloc extends IMoviesBloc {
   MoviesRepository _moviesRepository = MoviesRepository();
-  StreamController<MoviesModel> _moviesStreamController = StreamController();
+  StreamController<Movie> _moviesStreamController = StreamController();
 
   @override
-  void initialize() {}
+  Future<void> initialize() async {}
 
   @override
   void dispose() {
-    this._moviesStreamController.close();
+    _moviesStreamController.close();
   }
 
   @override
-  void fetchMovies() async {
+  void fetchTrendingMovies() async {
     final movieList = await _moviesRepository.fetchAllMovies();
-    this._moviesStreamController.sink.add(
-          movieList,
-        );
+    _addFetchedMovies(
+      movieList,
+    );
   }
 
   @override
-  Stream<MoviesModel> get stream => this._moviesStreamController.stream;
+  void fetchMoviesBySearch(String movieKeywords) async {
+    if (movieKeywords.isNotEmpty) {
+      final movieList = await _moviesRepository.fetchMovieSearch(
+        movieKeywords,
+      );
+      _addFetchedMovies(
+        movieList,
+      );
+    } else {
+      fetchTrendingMovies();
+    }
+  }
+
+  void _addFetchedMovies(Movie movies) {
+    _moviesStreamController.sink.add(
+      movies,
+    );
+  }
+
+  @override
+  Stream<Movie> get stream => _moviesStreamController.stream;
 }

@@ -1,4 +1,4 @@
 abstract class Bloc {
-  void initialize();
+  Future<void> initialize();
   void dispose();
 }

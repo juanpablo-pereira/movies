@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/movies_grid_builder.dart';
-import '../model/movies_model.dart';
+import '../model/movie.dart';
 import '../bloc/movies_bloc.dart';
-import '../utils/constants.dart';
+import '../widgets/movie_seach_bar.dart';
+import '../utils/movie_dimensions.dart';
 
 class MoviesPage extends StatelessWidget {
   const MoviesPage({
-    Key key,
-    this.title,
-    this.bloc,
+    Key? key,
+    required this.title,
+    required this.bloc,
   }) : super(key: key);
 
   final String title;
@@ -17,32 +18,39 @@ class MoviesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    this.bloc.fetchMovies();
+    this.bloc.fetchTrendingMovies();
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           title,
         ),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(
+            MovieDimensions.appBarBottomHeight,
+          ),
+          child: MovieSearchBar(
+            bloc: this.bloc,
+          ),
+        ),
         backgroundColor: Colors.blueGrey.shade900,
         shadowColor: Colors.blueGrey.shade100,
-        elevation: Constants.appBarElevation,
+        elevation: MovieDimensions.appBarElevation,
       ),
-      body: StreamBuilder<MoviesModel>(
+      body: StreamBuilder<Movie>(
         stream: bloc.stream,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return MoviesGridBuilder(
-              snapshot.data.results,
-            );
-          } else if (snapshot.hasError) {
-            return Text(
-              '${snapshot.error}',
-            );
-          }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return snapshot.hasData
+              ? MoviesGridBuilder(
+                  snapshot.data!.results,
+                )
+              : snapshot.hasError
+                  ? Text(
+                      '${snapshot.error}',
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
+                    );
         },
       ),
     );
