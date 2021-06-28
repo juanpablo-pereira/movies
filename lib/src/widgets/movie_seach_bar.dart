@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../bloc/movies_bloc.dart';
+import '../resources/movie_strings.dart';
 import '../utils/movie_dimensions.dart';
 
 class MovieSearchBar extends StatelessWidget {
@@ -18,7 +19,7 @@ class MovieSearchBar extends StatelessWidget {
       child: TextField(
         textAlignVertical: TextAlignVertical.bottom,
         decoration: InputDecoration(
-          hintText: MovieDimensions.appBarTextFieldHint,
+          hintText: MovieStrings.appBarTextFieldHint,
           filled: MovieDimensions.appBarTextFieldIsFilled,
           fillColor: Colors.blueGrey.shade100,
           enabledBorder: OutlineInputBorder(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/movie_dimensions.dart';
 import '../model/movie_result.dart';
 import '../resources/movie_strings.dart';
+import '../ui/movie_details_page.dart';
 
 class MoviesGridBuilder extends StatelessWidget {
   const MoviesGridBuilder(
@@ -21,9 +22,21 @@ class MoviesGridBuilder extends StatelessWidget {
       ),
       itemCount: moviesResults.length,
       itemBuilder: (context, index) {
-        return Image.network(
-          '${MovieStrings.gridBuilderImageUrlStart + moviesResults[index].posterPath}',
-          fit: BoxFit.cover,
+        return InkWell(
+          child: Image.network(
+            '${MovieStrings.gridBuilderImageUrlStart + moviesResults[index].posterPath}',
+            fit: BoxFit.cover,
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MovieDetailsPage(
+                  moviesResults[index],
+                ),
+              ),
+            );
+          },
         );
       },
     );
