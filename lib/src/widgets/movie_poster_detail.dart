@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/movie_dimensions.dart';
 import '../resources/movie_strings.dart';
+import 'movie_hero.dart';
 
 class MoviePosterDetail extends StatelessWidget {
   const MoviePosterDetail({
@@ -19,9 +20,10 @@ class MoviePosterDetail extends StatelessWidget {
           height: MovieDimensions.paddingVerticalMedium,
         ),
         Center(
-          child: Image.network(
-            '${MovieStrings.gridBuilderImageUrlStart + imagePath}',
-            fit: BoxFit.fitWidth,
+          child: MovieHero(
+            imageUrl: '${MovieStrings.gridBuilderImageUrlStart + imagePath}',
+            imageFit: BoxFit.fitWidth,
+            heroTag: '$imagePath',
             height: MovieDimensions.detailsImageHeight,
             width: MovieDimensions.detailsImageWidth,
           ),
