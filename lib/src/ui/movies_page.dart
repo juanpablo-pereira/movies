@@ -4,7 +4,7 @@ import '../widgets/movies_grid_builder.dart';
 import '../model/movie.dart';
 import '../bloc/movies_bloc.dart';
 import '../widgets/movie_seach_bar.dart';
-import '../utils/movie_dimensions.dart';
+import '../utils/pages_dimensions.dart';
 
 class MoviesPage extends StatelessWidget {
   const MoviesPage({
@@ -27,7 +27,7 @@ class MoviesPage extends StatelessWidget {
         ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(
-            MovieDimensions.appBarBottomHeight,
+            PagesDimensions.appBarBottomHeight,
           ),
           child: MovieSearchBar(
             bloc: this.bloc,
@@ -35,7 +35,7 @@ class MoviesPage extends StatelessWidget {
         ),
         backgroundColor: Colors.blueGrey.shade900,
         shadowColor: Colors.blueGrey.shade100,
-        elevation: MovieDimensions.appBarElevation,
+        elevation: PagesDimensions.appBarElevation,
       ),
       body: StreamBuilder<Movie>(
         stream: bloc.stream,
