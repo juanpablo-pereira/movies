@@ -8,6 +8,8 @@ class MoviesBloc extends IMoviesBloc {
   MoviesRepository _moviesRepository = MoviesRepository();
   StreamController<Movie> _moviesStreamController = StreamController();
 
+  MoviesBloc([MoviesRepository? repository])
+      : _moviesRepository = repository ?? MoviesRepository();
   @override
   Future<void> initialize() async {}
 

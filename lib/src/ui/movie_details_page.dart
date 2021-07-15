@@ -25,7 +25,8 @@ class MovieDetailsPage extends StatelessWidget {
         child: Column(
           children: [
             MoviePosterDetail(
-              imagePath: Local.MovieStrings.gridBuilderImageUrlStart + data.posterPath,
+              imagePath:
+                  Local.MovieStrings.gridBuilderImageUrlStart + data.posterPath,
             ),
             MovieInfoDetail(
               title: data.title,
